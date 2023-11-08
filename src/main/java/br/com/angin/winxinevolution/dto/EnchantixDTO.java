@@ -1,5 +1,6 @@
 package br.com.angin.winxinevolution.dto;
 
+import br.com.angin.winxinevolution.model.FadaModel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -12,27 +13,10 @@ import org.springframework.hateoas.RepresentationModel;
 @NoArgsConstructor
 @Getter
 @Setter
-public class EnchantDTO extends RepresentationModel {
-
+public class EnchantixDTO extends RepresentationModel {
     private int id;
-
     @NotBlank
     @Size(min = 1, max = 50)
-    private String firstName;
-
-    @NotBlank
-    @Size(min = 1, max = 50)
-    private String lastName;
-
-    @NotBlank
-    private int fairyAge;
-
-    @NotBlank
-    @Size(min = 5, max = 50)
-    private String fairyNationality ;
-
-    public String getFullName(){
-        return this.firstName + " " + this.lastName;
-    }
-
+    private String name;
+    private FadaModel fadaModel;
 }

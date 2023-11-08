@@ -11,21 +11,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "customers")
-public class EnchantModel {
-
+@Table(name = "enchantix")
+public class EnchantixModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "requisitosEnchantix", nullable = false, length = 50)
+    private String requisitosEnchantix;
+    @Column(name = "aparenciaEnchantix", nullable = false, length = 50)
+    private String aparenciaEnchantix;
 
-    @Column(name = "first_name", nullable = false, length = 50)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false, length = 50)
-    private String lastName;
-
-    @Column(nullable = false, length = 50)
-    private String city;
-
-
+    @Column(name = "poderesEnchantix", nullable = false, length = 50)
+    private String poderesEnchantix;
+    @ManyToOne
+    @JoinColumn(name = "fada_id")
+    private FadaModel fadaModel;
 }

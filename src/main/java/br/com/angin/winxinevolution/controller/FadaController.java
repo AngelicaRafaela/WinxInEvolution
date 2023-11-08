@@ -1,7 +1,7 @@
 package br.com.angin.winxinevolution.controller;
 
-import br.com.angin.winxinevolution.dto.FairyDTO;
-import br.com.angin.winxinevolution.service.FairyService;
+import br.com.angin.winxinevolution.dto.FadaDTO;
+import br.com.angin.winxinevolution.service.FadaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,110 +20,101 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/customers")
-@Tag(name = "Customers", description = "This endpoint manages Customers")
-public class FairyController {
-
+@RequestMapping("/api/fada")
+@Tag(name = "Fada", description = "This endpoint manages Fada")
+public class FadaController
+{
     @Autowired
-    private FairyService service;
+    private FadaService service;
 
     @PostMapping
-    @Operation(summary = "Persists a new Customer in database", tags = {"Customers"}, responses = {
+    @Operation(summary = "Persists a new Fada in database", tags = {"Fada"}, responses = {
             @ApiResponse(description = "Success!", responseCode = "200", content = {
                     @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = FairyDTO.class))
+                            schema = @Schema(implementation = FadaDTO.class))
             })
     })
-    public FairyDTO create(@RequestBody FairyDTO dto){
+    public FadaDTO create(@RequestBody FadaDTO dto){
         return service.create(dto);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Find a Customer using the ID", tags = {"Customers"}, responses = {
+    @Operation(summary = "Find a Fada using the ID", tags = {"Fada"}, responses = {
             @ApiResponse(description = "Success!", responseCode = "200", content = {
                     @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = FairyDTO.class)
+                    @Schema(implementation = FadaDTO.class)
                     )
             }),
             @ApiResponse(description = "Bad Request", responseCode = "400", content = {@Content}),
             @ApiResponse(description = "Unauthorized", responseCode = "401", content = {@Content}),
             @ApiResponse(description = "Internal Error", responseCode = "500", content = {@Content})
     })
-    public FairyDTO findById(@PathVariable("id") int id){
-        FairyDTO dto = service.findById(id);
+    public FadaDTO findById(@PathVariable("id") int id){
+        FadaDTO dto = service.findById(id);
         //..adding HATEOAS link
         buildEntityLink(dto);
         return dto;
     }
 
     @GetMapping
-    public ResponseEntity<PagedModel<FairyDTO>> findAll(
+    public ResponseEntity<PagedModel<FadaDTO>> findAll(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "direction", defaultValue = "asc") String direction,
-            PagedResourcesAssembler<FairyDTO> assembler
+            PagedResourcesAssembler<FadaDTO> assembler
     ){
         var sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "firstName"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "name"));
 
-        Page<FairyDTO> customers = service.findAll(pageable);
+        Page<FadaDTO> Fadas = service.findAll(pageable);
 
-        for (FairyDTO customer:customers){
-            buildEntityLink(customer);
+        for (FadaDTO Fada:Fadas){
+            buildEntityLink(Fada);
         }
-        return new ResponseEntity(assembler.toModel(customers), HttpStatus.OK);
+        return new ResponseEntity(assembler.toModel(Fadas), HttpStatus.OK);
     }
 
     @GetMapping("/find")
-    public ResponseEntity<PagedModel<FairyDTO>> findByName(
+    public ResponseEntity<PagedModel<FadaDTO>> findByName(
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "direction", defaultValue = "asc") String direction,
-            PagedResourcesAssembler<FairyDTO> assembler
+            PagedResourcesAssembler<FadaDTO> assembler
     ){
         var sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "firstName"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "name"));
 
-        Page<FairyDTO> customers = service.findByName(name, pageable);
+        Page<FadaDTO> Fadas = service.findByName(name, pageable);
 
-        for (FairyDTO customer:customers){
-            buildEntityLink(customer);
+        for (FadaDTO Fada:Fadas){
+            buildEntityLink(Fada);
         }
-        return new ResponseEntity(assembler.toModel(customers), HttpStatus.OK);
+        return new ResponseEntity(assembler.toModel(Fadas), HttpStatus.OK);
     }
 
     @PutMapping
-    public FairyDTO update(@RequestBody FairyDTO dto){
+    public FadaDTO update(@RequestBody FadaDTO dto){
         return service.update(dto);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id){
-        FairyDTO dto = service.findById(id);
+        FadaDTO dto = service.findById(id);
         service.delete(dto);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
-    public void buildEntityLink(FairyDTO customer){
+    public void buildEntityLink(FadaDTO fada){
         //..self link
-        customer.add(
+        fada.add(
                 WebMvcLinkBuilder.linkTo(
                         WebMvcLinkBuilder.methodOn(
                                 this.getClass()
-                        ).findById(customer.getId())
+                        ).findById(fada.getId())
                 ).withSelfRel()
         );
     }
-
-//    public void buildCollectionLink(CollectionModel<CustomerDTO> customers){
-//        customers.add(
-//                WebMvcLinkBuilder.linkTo(
-//                        WebMvcLinkBuilder.methodOn(this.getClass()).findAll()
-//                ).withRel(IanaLinkRelations.COLLECTION)
-//        );
-//    }
-
 }

@@ -11,9 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "customers")
-public class FairyModel {
-
+@Table(name = "fada")
+public class FadaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -25,7 +24,9 @@ public class FairyModel {
     private String lastName;
 
     @Column(nullable = false, length = 50)
-    private String city;
+    private int fairyAge;
 
-
+    @Column(name = "fairyNationality", nullable = false, length = 50)
+    private String fairyNationality;
 }
+

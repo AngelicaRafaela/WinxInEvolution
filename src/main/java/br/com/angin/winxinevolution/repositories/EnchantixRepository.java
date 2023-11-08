@@ -1,4 +1,4 @@
-package br.com.angin.winxinevolution.repository;
+package br.com.angin.winxinevolution.repositories;
 
 import br.com.angin.winxinevolution.model.EnchantixModel;
 import org.springframework.data.domain.Page;

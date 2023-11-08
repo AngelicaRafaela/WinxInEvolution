@@ -12,27 +12,12 @@ import org.springframework.hateoas.RepresentationModel;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FairyDTO extends RepresentationModel {
-
+public class FadaDTO extends RepresentationModel {
     private int id;
-
     @NotBlank
     @Size(min = 1, max = 50)
-    private String firstName;
+    private String name;
 
-    @NotBlank
-    @Size(min = 1, max = 50)
-    private String lastName;
-
-    @NotBlank
-    private int fairyAge;
-
-    @NotBlank
-    @Size(min = 5, max = 50)
-    private String fairyNationality ;
-
-    public String getFullName(){
-        return this.firstName + " " + this.lastName;
-    }
 
 }
+

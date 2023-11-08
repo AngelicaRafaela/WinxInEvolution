@@ -1,7 +1,7 @@
 package br.com.angin.winxinevolution.controller;
 
-import br.com.angin.winxinevolution.dto.EnchantDTO;
-import br.com.angin.winxinevolution.service.EnchantService;
+import br.com.angin.winxinevolution.dto.EnchantixDTO;
+import br.com.angin.winxinevolution.service.EnchantixService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
