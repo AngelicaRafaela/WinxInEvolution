@@ -19,6 +19,6 @@ public class TransfModel {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
     @ManyToOne
-    @JoinColumn(name = "WinxID")
+    @JoinColumn(name = "winx_id")
     private WinxModel winxModel;
 }
